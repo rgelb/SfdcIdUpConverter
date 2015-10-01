@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DiscoveryClientResultsFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Results>
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="https://ihm.my.salesforce.com/soap/wsdl.jsp?type=*&amp;ver_DrivEnable=1.11&amp;ver_EasyDescribe=1.91&amp;ver_mea=1.2&amp;ver_PRINTANY=1.1&amp;ver_sf_chttr_apps=1.9&amp;ver_sf_com_apps=1.6&amp;ver_StrikeForce1=1.17&amp;ver_WM4SF3=2.16" filename="wsdl.wsdl" />
+  </Results>
+</DiscoveryClientResultsFile>
