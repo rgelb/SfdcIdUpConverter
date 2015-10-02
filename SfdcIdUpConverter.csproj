@@ -34,8 +34,7 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>appIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>SfdcIdUpConverter.Program</StartupObject>
@@ -340,6 +339,7 @@
     <None Include="Icons\connectionActive.png" />
     <None Include="Icons\connectionInactive.png" />
     <None Include="Resources\ConnectionActive.png" />
+    <Content Include="appIcon.ico" />
     <Content Include="Icons\connectionError.png" />
   </ItemGroup>
   <ItemGroup>
