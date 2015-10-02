@@ -16,38 +16,39 @@ namespace SfdcIdUpConverter
 {
     public partial class Container : Form
     {
+        #region Private Variables
+        private enum ConnectionStatus
+        {
+            Connecting,
+            Connected,
+            Error
+        }
+
         ClipboardMonitor clipboardMonitor;
-        bool connectedToSf = false;
+        ConnectionStatus sfConnectionStatus = ConnectionStatus.Connecting;
         bool resultsShowing = false;
-
-        EnterpriseSoap.SforceService svcEntepriseSoap;
+        string lastError = string.Empty;
+        PartnerSoap.SforceService svcPartnerSoap;
         ApexSvcSoap.ApexService svcApexSoap;
-
         FileSystemWatcher settingsWatch = new FileSystemWatcher();
-
         Results frmResults = new Results();
+        private string lastClipboardText = "";
+        private DateTime lastClipboardOn = DateTime.MinValue;
+        #endregion
 
+        #region Constructors
         public Container()
         {
             InitializeComponent();
-        }
+        } 
+        #endregion
 
-        protected override void OnLoad(EventArgs e)
+        #region Private Methods
+        private void ConnectToSf()
         {
-            this.Visible = false;
-            this.ShowInTaskbar = false;
-
-            clipboardMonitor = new ClipboardMonitor();
-            clipboardMonitor.ClipboardChanged += clipboardMonitor_ClipboardChanged;
-
             IndicateSfConnection();
             LoadWebServices();
             IndicateSfConnection();
-
-            SubscribeToResultFormEvents();
-            SubscribeToSettingsChanges();
-
-            base.OnLoad(e);
         }
 
         private void SubscribeToSettingsChanges()
@@ -55,72 +56,63 @@ namespace SfdcIdUpConverter
             FileInfo fi = new FileInfo(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
 
             settingsWatch.Path = fi.DirectoryName;
-            settingsWatch.Filter = "*.config";
+            settingsWatch.Filter = fi.Name;
             settingsWatch.NotifyFilter = NotifyFilters.LastWrite;
 
             settingsWatch.Changed += new FileSystemEventHandler(SettingsChanged);
             settingsWatch.EnableRaisingEvents = true;
         }
 
-        private void SettingsChanged(object sender, FileSystemEventArgs e)
-        {
-            Debug.WriteLine(e.ChangeType + " at " + e.FullPath);
-        }
-
         private void SubscribeToResultFormEvents()
         {
             frmResults.FormShown += (object sender, EventArgs e) => { resultsShowing = true; Debug.WriteLine("Results Shown"); };
-            frmResults.FormHidden += (object sender, EventArgs e) => { resultsShowing = false;  Debug.WriteLine("Results Hidden"); };
+            frmResults.FormHidden += (object sender, EventArgs e) => { resultsShowing = false; Debug.WriteLine("Results Hidden"); };
 
         }
 
         private void IndicateSfConnection()
         {
-            Bitmap bmp = connectedToSf ? 
-                SfdcIdUpConverter.Properties.Resources.connectionActive :
-                SfdcIdUpConverter.Properties.Resources.connectionInactive;
+            Bitmap bmp;
+            switch (sfConnectionStatus)
+            {
+                case ConnectionStatus.Connecting:
+                    bmp = SfdcIdUpConverter.Properties.Resources.connectionInactive;
+                    trayIconApp.Text = "Connecting to Salesforce...";
+                    break;
+                case ConnectionStatus.Connected:
+                    bmp = SfdcIdUpConverter.Properties.Resources.connectionActive;
+                    trayIconApp.Text = "SfdcId Up Converter - Connected";
+                    break;
+                case ConnectionStatus.Error:
+                    bmp = SfdcIdUpConverter.Properties.Resources.connectionError;
+                    trayIconApp.Text = ("Connection Error -  " + lastError).Substring(64);
+                    break;
+                default:
+                    MessageBox.Show("Invalid connection status");
+                    return;
+            }
 
             trayIconApp.Icon = Icon.FromHandle(bmp.GetHicon());
-        }
-
-        void clipboardMonitor_ClipboardChanged(object sender, ClipboardChangedEventArgs e)
-        {
-            try
-            {
-                // don't process anything if not connected
-                if (!connectedToSf) return;
-
-                IDataObject iData = e.DataObject;
-                if (iData.GetDataPresent(DataFormats.Text))
-                {
-                    string contents = (string)iData.GetData(DataFormats.Text);
-                    Debug.WriteLine("Clipboard Change Detected: " + contents);
-
-                    ProcessClipboard(contents);
-                }
-
-            }
-            catch (Exception ex)
-            {
-                AddErrorToLog(ex);
-            }
         }
 
         private void LoadWebServices()
         {
             try
             {
+                svcPartnerSoap = new PartnerSoap.SforceService();
+                svcPartnerSoap.AdjustUrl();
 
-                svcEntepriseSoap = new EnterpriseSoap.SforceService();
-                EnterpriseSoap.LoginResult loginResult = svcEntepriseSoap.login("robertgelb@iheartmedia.com", "Robdogg2");
+                PartnerSoap.LoginResult loginResult = svcPartnerSoap.login(AppSettings.UserName, AppSettings.Password);
+
                 var SessionID = loginResult.sessionId;
                 var SessionURL = loginResult.serverUrl;
 
-                svcEntepriseSoap.SessionHeaderValue = new EnterpriseSoap.SessionHeader { sessionId = loginResult.sessionId };
-                svcEntepriseSoap.Url = SessionURL;
+                svcPartnerSoap.SessionHeaderValue = new PartnerSoap.SessionHeader { sessionId = loginResult.sessionId };
+                svcPartnerSoap.Url = SessionURL;
 
                 svcApexSoap = new ApexSvcSoap.ApexService();
                 svcApexSoap.SessionHeaderValue = new ApexSvcSoap.SessionHeader { sessionId = SessionID };
+                svcApexSoap.AdjustUrl(SessionURL);
 
                 // set debugging headers
                 ApexSvcSoap.LogInfo infoAll = new ApexSvcSoap.LogInfo();
@@ -144,17 +136,15 @@ namespace SfdcIdUpConverter
                 debugHeader.categories = new ApexSvcSoap.LogInfo[] { infoAll, infoApex, infoDB, infoProfiling };
 
                 svcApexSoap.DebuggingHeaderValue = debugHeader;
-                
-                connectedToSf = true;
+
+                sfConnectionStatus = ConnectionStatus.Connected;
             }
             catch (Exception ex)
             {
-                connectedToSf = false;
+                lastError = ex.Message;
+                sfConnectionStatus = ConnectionStatus.Error;
             }
         }
-
-        private string lastClipboardText = "";
-        private DateTime lastClipboardOn = DateTime.MinValue;
 
         private void ProcessClipboard(string contents)
         {
@@ -191,7 +181,7 @@ namespace SfdcIdUpConverter
             frmResults.Opacity = 1;
             frmResults.ObjectType = objectType;
             frmResults.ObjectId = objectId;
-            
+
 
             // several conditions
 
@@ -235,13 +225,73 @@ namespace SfdcIdUpConverter
             return null;
         }
 
-
         private void AddErrorToLog(Exception ex)
         {
             Debug.WriteLine(ex.ToString());
             Trace.WriteLine(ex.ToString());
+        } 
+        #endregion
+
+        #region Events
+
+        protected override void OnLoad(EventArgs e)
+        {
+            this.Visible = false;
+            this.ShowInTaskbar = false;
+
+            clipboardMonitor = new ClipboardMonitor();
+            clipboardMonitor.ClipboardChanged += clipboardMonitor_ClipboardChanged;
+
+            ConnectToSf();
+
+            SubscribeToResultFormEvents();
+            SubscribeToSettingsChanges();
+
+            base.OnLoad(e);
         }
 
+        private void SettingsChanged(object sender, FileSystemEventArgs e)
+        {
+            // we turn off, then on Raising events because 
+            // the FileSystemWatcher sends multiple events per single change
+
+            settingsWatch.EnableRaisingEvents = false;
+            try
+            {
+                Debug.WriteLine(e.ChangeType + " at " + e.FullPath);
+
+                // set to reconnect
+                sfConnectionStatus = ConnectionStatus.Connecting;
+                ConnectToSf();
+            }
+            finally
+            {
+                settingsWatch.EnableRaisingEvents = true;
+            }
+        }
+
+        private void clipboardMonitor_ClipboardChanged(object sender, ClipboardChangedEventArgs e)
+        {
+            try
+            {
+                // don't process anything if not connected
+                if (sfConnectionStatus != ConnectionStatus.Connected) return;
+
+                IDataObject iData = e.DataObject;
+                if (iData.GetDataPresent(DataFormats.Text))
+                {
+                    string contents = (string)iData.GetData(DataFormats.Text);
+                    Debug.WriteLine("Clipboard Change Detected: " + contents);
+
+                    ProcessClipboard(contents);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                AddErrorToLog(ex);
+            }
+        }
 
         private void mnuItemExit_Click(object sender, EventArgs e)
         {
@@ -258,6 +308,19 @@ namespace SfdcIdUpConverter
         {
             Process.Start(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile, null);
         }
+
+        private void tmrRefreshConnection_Tick(object sender, EventArgs e)
+        {
+            // the token we get from the connection is good for 12 hours...
+            // we are gonna refresh every 6 hours just to be sure
+            // set to reconnect.  Only do this if we are currently connected
+
+            if (sfConnectionStatus != ConnectionStatus.Connected) return;
+
+            sfConnectionStatus = ConnectionStatus.Connecting;
+            ConnectToSf();
+        } 
+        #endregion
         
     }
 }

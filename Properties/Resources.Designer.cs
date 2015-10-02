@@ -73,6 +73,16 @@ namespace SfdcIdUpConverter.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap connectionError {
+            get {
+                object obj = ResourceManager.GetObject("connectionError", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap connectionInactive {
             get {
                 object obj = ResourceManager.GetObject("connectionInactive", resourceCulture);

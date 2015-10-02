@@ -36,6 +36,7 @@
             this.mnuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.tmrRefreshConnection = new System.Windows.Forms.Timer(this.components);
             this.mnuApp.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,7 +58,7 @@
             this.toolStripSeparator2,
             this.mnuItemAbout});
             this.mnuApp.Name = "mnuApp";
-            this.mnuApp.Size = new System.Drawing.Size(201, 98);
+            this.mnuApp.Size = new System.Drawing.Size(201, 76);
             // 
             // mnuItemSettings
             // 
@@ -85,6 +86,12 @@
             this.mnuItemAbout.Text = "About SfdcUpConverter";
             this.mnuItemAbout.Click += new System.EventHandler(this.mnuItemAbout_Click);
             // 
+            // tmrRefreshConnection
+            // 
+            this.tmrRefreshConnection.Enabled = true;
+            this.tmrRefreshConnection.Interval = 21600000;
+            this.tmrRefreshConnection.Tick += new System.EventHandler(this.tmrRefreshConnection_Tick);
+            // 
             // Container
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -106,6 +113,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuItemAbout;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem mnuItemSettings;
+        private System.Windows.Forms.Timer tmrRefreshConnection;
     }
 }
 

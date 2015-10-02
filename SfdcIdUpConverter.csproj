@@ -34,7 +34,8 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>UpConvert.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>SfdcIdUpConverter.Program</StartupObject>
@@ -77,6 +78,7 @@
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Runtime.Serialization" />
@@ -116,7 +118,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
     </Compile>
-    <Compile Include="Web References\EnterpriseSoap\Reference.cs">
+    <Compile Include="Web References\PartnerSoap\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
@@ -171,146 +173,146 @@
     <None Include="Web References\ApexSvcSoap\WsdlToApexResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\DeleteResult.datasource">
+    <None Include="Web References\PartnerSoap\DeleteResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\DescribeAppMenuItem.datasource">
+    <None Include="Web References\PartnerSoap\DescribeAppMenuItem.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\DescribeApprovalLayout.datasource">
+    <None Include="Web References\PartnerSoap\DescribeApprovalLayout.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\DescribeAvailableQuickActionResult.datasource">
+    <None Include="Web References\PartnerSoap\DescribeAvailableQuickActionResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\DescribeCompactLayout.datasource">
+    <None Include="Web References\PartnerSoap\DescribeCompactLayout.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\DescribeCompactLayoutsResult.datasource">
+    <None Include="Web References\PartnerSoap\DescribeCompactLayoutsResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\DescribeDataCategoryGroupResult.datasource">
+    <None Include="Web References\PartnerSoap\DescribeDataCategoryGroupResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\DescribeDataCategoryGroupStructureResult.datasource">
+    <None Include="Web References\PartnerSoap\DescribeDataCategoryGroupStructureResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\DescribeFlexiPageResult.datasource">
+    <None Include="Web References\PartnerSoap\DescribeFlexiPageResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\DescribeGlobalResult.datasource">
+    <None Include="Web References\PartnerSoap\DescribeGlobalResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\DescribeGlobalTheme.datasource">
+    <None Include="Web References\PartnerSoap\DescribeGlobalTheme.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\DescribeLayoutResult.datasource">
+    <None Include="Web References\PartnerSoap\DescribeLayoutResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\DescribeNounResult.datasource">
+    <None Include="Web References\PartnerSoap\DescribeNounResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\DescribeQuickActionResult.datasource">
+    <None Include="Web References\PartnerSoap\DescribeQuickActionResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\DescribeSearchLayoutResult.datasource">
+    <None Include="Web References\PartnerSoap\DescribeSearchLayoutResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\DescribeSearchScopeOrderResult.datasource">
+    <None Include="Web References\PartnerSoap\DescribeSearchScopeOrderResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\DescribeSObjectResult.datasource">
+    <None Include="Web References\PartnerSoap\DescribeSObjectResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\DescribeSoftphoneLayoutResult.datasource">
+    <None Include="Web References\PartnerSoap\DescribeSoftphoneLayoutResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\DescribeSoqlListView.datasource">
+    <None Include="Web References\PartnerSoap\DescribeSoqlListView.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\DescribeTab.datasource">
+    <None Include="Web References\PartnerSoap\DescribeTab.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\DescribeTabSetResult.datasource">
+    <None Include="Web References\PartnerSoap\DescribeTabSetResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\DescribeThemeItem.datasource">
+    <None Include="Web References\PartnerSoap\DescribeThemeItem.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\EmptyRecycleBinResult.datasource">
+    <None Include="Web References\PartnerSoap\EmptyRecycleBinResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\ExecuteListViewResult.datasource">
+    <None Include="Web References\PartnerSoap\ExecuteListViewResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\GetDeletedResult.datasource">
+    <None Include="Web References\PartnerSoap\GetDeletedResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\GetServerTimestampResult.datasource">
+    <None Include="Web References\PartnerSoap\GetServerTimestampResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\GetUpdatedResult.datasource">
+    <None Include="Web References\PartnerSoap\GetUpdatedResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\GetUserInfoResult.datasource">
+    <None Include="Web References\PartnerSoap\GetUserInfoResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\InvalidateSessionsResult.datasource">
+    <None Include="Web References\PartnerSoap\InvalidateSessionsResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\KnowledgeSettings.datasource">
+    <None Include="Web References\PartnerSoap\KnowledgeSettings.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\LeadConvertResult.datasource">
+    <None Include="Web References\PartnerSoap\LeadConvertResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\LoginResult.datasource">
+    <None Include="Web References\PartnerSoap\LoginResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\MergeResult.datasource">
+    <None Include="Web References\PartnerSoap\MergeResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\PerformQuickActionResult.datasource">
+    <None Include="Web References\PartnerSoap\PerformQuickActionResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\ProcessResult.datasource">
+    <None Include="Web References\PartnerSoap\ProcessResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\QueryResult.datasource">
+    <None Include="Web References\PartnerSoap\QueryResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\QuickActionTemplateResult.datasource">
+    <None Include="Web References\PartnerSoap\QuickActionTemplateResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\Reference.map">
+    <None Include="Web References\PartnerSoap\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Web References\EnterpriseSoap\ResetPasswordResult.datasource">
+    <None Include="Web References\PartnerSoap\ResetPasswordResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\SaveResult.datasource">
+    <None Include="Web References\PartnerSoap\SaveResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\SearchResult.datasource">
+    <None Include="Web References\PartnerSoap\SearchResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\SendEmailResult.datasource">
+    <None Include="Web References\PartnerSoap\SendEmailResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\SetPasswordResult.datasource">
+    <None Include="Web References\PartnerSoap\SetPasswordResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\sObject.datasource">
+    <None Include="Web References\PartnerSoap\sObject.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\UndeleteResult.datasource">
+    <None Include="Web References\PartnerSoap\UndeleteResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\UpsertResult.datasource">
+    <None Include="Web References\PartnerSoap\UpsertResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\EnterpriseSoap\wsdl.wsdl" />
+    <None Include="Web References\PartnerSoap\wsdl.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
@@ -338,7 +340,7 @@
     <None Include="Icons\connectionActive.png" />
     <None Include="Icons\connectionInactive.png" />
     <None Include="Resources\ConnectionActive.png" />
-    <Content Include="UpConvert.ico" />
+    <Content Include="Icons\connectionError.png" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
@@ -358,16 +360,16 @@
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>SfdcIdUpConverter_ApexSvcSoap_ApexService</CachedSettingsPropName>
     </WebReferenceUrl>
-    <WebReferenceUrl Include="https://ihm.my.salesforce.com/soap/wsdl.jsp%3ftype=%2a&amp;ver_DrivEnable=1.11&amp;ver_EasyDescribe=1.91&amp;ver_mea=1.2&amp;ver_PRINTANY=1.1&amp;ver_sf_chttr_apps=1.9&amp;ver_sf_com_apps=1.6&amp;ver_StrikeForce1=1.17&amp;ver_WM4SF3=2.16">
+    <WebReferenceUrl Include="https://ihm.my.salesforce.com/soap/wsdl.jsp">
       <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\EnterpriseSoap\</RelPath>
-      <UpdateFromURL>https://ihm.my.salesforce.com/soap/wsdl.jsp%3ftype=%2a&amp;ver_DrivEnable=1.11&amp;ver_EasyDescribe=1.91&amp;ver_mea=1.2&amp;ver_PRINTANY=1.1&amp;ver_sf_chttr_apps=1.9&amp;ver_sf_com_apps=1.6&amp;ver_StrikeForce1=1.17&amp;ver_WM4SF3=2.16</UpdateFromURL>
+      <RelPath>Web References\PartnerSoap\</RelPath>
+      <UpdateFromURL>https://ihm.my.salesforce.com/soap/wsdl.jsp</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
       </CachedDynamicPropName>
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
-      <CachedSettingsPropName>SfdcIdUpConverter_EnterpriseSoap_SforceService</CachedSettingsPropName>
+      <CachedSettingsPropName>SfdcIdUpConverter_PartnerSoap_SforceService</CachedSettingsPropName>
     </WebReferenceUrl>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

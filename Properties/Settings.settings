@@ -2,11 +2,11 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SfdcIdUpConverter.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="SfdcIdUpConverter_EnterpriseSoap_SforceService" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">https://login.salesforce.com/services/Soap/c/34.0/0DFE0000000XZH3</Value>
-    </Setting>
     <Setting Name="SfdcIdUpConverter_ApexSvcSoap_ApexService" Type="(Web Service URL)" Scope="Application">
       <Value Profile="(Default)">https://ihm.my.salesforce.com/services/Soap/s/34.0</Value>
+    </Setting>
+    <Setting Name="SfdcIdUpConverter_PartnerSoap_SforceService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://login.salesforce.com/services/Soap/u/34.0</Value>
     </Setting>
   </Settings>
 </SettingsFile>

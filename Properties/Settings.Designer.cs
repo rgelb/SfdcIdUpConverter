@@ -12,7 +12,7 @@ namespace SfdcIdUpConverter.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "12.0.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -26,20 +26,20 @@ namespace SfdcIdUpConverter.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://login.salesforce.com/services/Soap/c/34.0/0DFE0000000XZH3")]
-        public string SfdcIdUpConverter_EnterpriseSoap_SforceService {
+        [global::System.Configuration.DefaultSettingValueAttribute("https://ihm.my.salesforce.com/services/Soap/s/34.0")]
+        public string SfdcIdUpConverter_ApexSvcSoap_ApexService {
             get {
-                return ((string)(this["SfdcIdUpConverter_EnterpriseSoap_SforceService"]));
+                return ((string)(this["SfdcIdUpConverter_ApexSvcSoap_ApexService"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://ihm.my.salesforce.com/services/Soap/s/34.0")]
-        public string SfdcIdUpConverter_ApexSvcSoap_ApexService {
+        [global::System.Configuration.DefaultSettingValueAttribute("https://login.salesforce.com/services/Soap/u/34.0")]
+        public string SfdcIdUpConverter_PartnerSoap_SforceService {
             get {
-                return ((string)(this["SfdcIdUpConverter_ApexSvcSoap_ApexService"]));
+                return ((string)(this["SfdcIdUpConverter_PartnerSoap_SforceService"]));
             }
         }
     }
