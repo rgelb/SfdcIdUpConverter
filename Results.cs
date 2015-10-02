@@ -12,34 +12,151 @@ namespace SfdcIdUpConverter
 {
     public partial class Results : Form
     {
-        public event EventHandler FormHidden = delegate { };
-        public event EventHandler FormShown = delegate { };
+        #region Private Variables
 
+        private Color originalBackColor;
+        private Color clickedBackColor; 
+        #endregion
+
+        #region Constructors
         public Results()
         {
             InitializeComponent();
-        }
+        } 
+        #endregion
 
+        #region Public Properties
+        public event EventHandler FormHidden = delegate { };
+        public event EventHandler FormShown = delegate { };
+
+        public string ObjectType { get; set; }
+        public string ObjectId { get; set; }
+        #endregion
+
+        #region Events
         protected override void OnLoad(EventArgs e)
         {
-            //PopulateResultLabel();
-
-            // now size it
-            // btnCopy.Left = lblIdInfo.Width + OFFSET;
-            // this.Size = new Size(lblIdInfo.Width + OFFSET + btnCopy.Width, btnCopy.Height);
             const int OFFSET = 3;
             int left = Screen.PrimaryScreen.WorkingArea.Width - this.Width - OFFSET;
             int top = Screen.PrimaryScreen.WorkingArea.Height - this.Height - OFFSET;
             this.Location = new Point(left, top);
 
-            //// initialize timers
-            //InitializeTimers();
+            // subscribe to all the mouse move events
+            this.MouseMove += HandleFormMouseMove;
+            lblIdInfo.MouseMove += HandleFormMouseMove;
+            btnClose.MouseMove += HandleFormMouseMove;
+            btnCopy.MouseMove += HandleFormMouseMove;
 
-            
+            originalBackColor = this.BackColor;
+            clickedBackColor = Color.AntiqueWhite;
 
             base.OnLoad(e);
         }
+        private void Results_Paint(object sender, PaintEventArgs e)
+        {
+            // draw a border around the form
+            try
+            {
+                const int THICKNESS = 2;
+                using (Graphics g = this.CreateGraphics())
+                {
+                    Pen pen = new Pen(Color.DarkBlue, THICKNESS);
 
+                    Rectangle rect = e.ClipRectangle;
+
+                    // increment X/Y so that drawing starts at 0,0 (instead of -1,-1)
+                    rect.X++;
+                    rect.Y++;
+
+
+                    // reduce rect by thickness of the pen, so it draws on form, not outside of it
+                    rect.Width -= THICKNESS;
+                    rect.Height -= THICKNESS;
+
+                    g.DrawRectangle(pen, rect);
+
+                    pen.Dispose();
+                }
+            }
+            catch 
+            {
+                // ignore
+            }
+        }
+
+
+        private void HandleFormMouseMove(object sender, MouseEventArgs e)
+        {
+            // stop all the fading or whatever else since user moved the mouse over
+            DisposeTimers();
+            this.Opacity = 1;
+            InitializeTimers();
+        }
+
+        private void btnCopy_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(ObjectId);
+            this.Focus();
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            DisposeTimers();
+            HideForm();
+        }
+
+        private void btnCopy_MouseDown(object sender, MouseEventArgs e)
+        {
+            // indicate that button is clicked
+            this.BackColor = clickedBackColor;
+        }
+
+        private void btnCopy_MouseUp(object sender, MouseEventArgs e)
+        {
+            // revert to original color
+            this.BackColor = originalBackColor;
+        }
+
+        private void tmrFade_Tick(object sender, EventArgs e)
+        {
+            this.Opacity -= 0.05;
+
+            if (this.Opacity <= 0.1)
+            {
+                tmrFade.Stop();
+                HideForm();
+            }
+        }
+
+        private void tmrHide_Tick(object sender, EventArgs e)
+        {
+            // turn off this timer
+            tmrHide.Stop();
+
+            // start the fade
+            tmrFade.Start();
+        }
+
+        #endregion
+
+        #region Public Methods 
+        public void UpdateResults(bool withAnimation = true)
+        {
+            DisposeTimers();
+
+            // animate the form to go offscreen, the back on
+            if (withAnimation)
+                AnimateFormOffScreenThenOn();
+
+            PopulateResultLabel();
+            InitializeTimers();
+
+            FormShown.RaiseEvent(this, EventArgs.Empty);
+            this.Focus();
+        }
+        #endregion
+
+        #region Private Methods
         private void PopulateResultLabel()
         {
             lblIdInfo.Text = string.Format("{0}\n{1}", ObjectType, ObjectId);
@@ -54,57 +171,6 @@ namespace SfdcIdUpConverter
         private void InitializeTimers()
         {
             tmrHide.Start();
-        }
-
-        public string ObjectType { get; set; }
-        public string ObjectId { get; set; }
-
-
-        private void btnCopy_Click(object sender, EventArgs e)
-        {
-            Clipboard.SetText(ObjectId);
-            this.Focus();
-        }
-
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            DisposeTimers();
-            HideForm();
-        }
-
-        private void tmrFade_Tick(object sender, EventArgs e)
-        {
-            this.Opacity -= 0.05;
-
-            if (this.Opacity <= 0.1)
-            {
-                tmrFade.Stop();
-                HideForm();               
-            }
-        }
-
-        private void tmrHide_Tick(object sender, EventArgs e)
-        {
-            // turn off this timer
-            tmrHide.Stop();
-
-            // start the fade
-            tmrFade.Start();
-        }
-
-        public void UpdateResults(bool withAnimation = true)
-        {
-            DisposeTimers();
-
-            // animate the form to go offscreen, the back on
-            if (withAnimation)
-                AnimateFormOffScreenThenOn();
-
-            PopulateResultLabel();
-            InitializeTimers();
-
-            FormShown.RaiseEvent(this, EventArgs.Empty);
-            this.Focus();
         }
 
         private void AnimateFormOffScreenThenOn()
@@ -141,5 +207,6 @@ namespace SfdcIdUpConverter
         }
 
 
+        #endregion
     }
 }

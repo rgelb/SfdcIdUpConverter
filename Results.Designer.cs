@@ -59,6 +59,8 @@
             this.btnCopy.TabIndex = 2;
             this.btnCopy.UseVisualStyleBackColor = true;
             this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
+            this.btnCopy.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnCopy_MouseDown);
+            this.btnCopy.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnCopy_MouseUp);
             // 
             // btnClose
             // 
@@ -101,6 +103,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "SfdcId Up Converter";
             this.TopMost = true;
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Results_Paint);
             this.ResumeLayout(false);
             this.PerformLayout();
 

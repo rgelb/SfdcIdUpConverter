@@ -300,7 +300,7 @@ namespace SfdcIdUpConverter
 
         private void mnuItemAbout_Click(object sender, System.EventArgs e)
         {
-            string msg = @"SfdcId Up Converter";
+            string msg = @"SfdcId 15 to 18 Up Converter" + Environment.NewLine + "Copyright © Robert Gelb 2015";
             MessageBox.Show(msg, "About UpConverter", MessageBoxButtons.OK);
         }
 
