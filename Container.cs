@@ -26,14 +26,14 @@ namespace SfdcIdUpConverter
 
         ClipboardMonitor clipboardMonitor;
         ConnectionStatus sfConnectionStatus = ConnectionStatus.Connecting;
-        bool resultsShowing = false;
+        bool resultsShowing;
         string lastError = string.Empty;
         PartnerSoap.SforceService svcPartnerSoap;
         ApexSvcSoap.ApexService svcApexSoap;
-        FileSystemWatcher settingsWatch = new FileSystemWatcher();
-        Results frmResults = new Results();
+        readonly FileSystemWatcher settingsWatch = new FileSystemWatcher();
+        readonly Results frmResults = new Results();
         private string lastClipboardText = "";
-        private DateTime lastClipboardOn = DateTime.MinValue;
+        private DateTime lastClipboardOn = DateTime.MinValue;        
         #endregion
 
         #region Constructors
@@ -59,14 +59,14 @@ namespace SfdcIdUpConverter
             settingsWatch.Filter = fi.Name;
             settingsWatch.NotifyFilter = NotifyFilters.LastWrite;
 
-            settingsWatch.Changed += new FileSystemEventHandler(SettingsChanged);
+            settingsWatch.Changed += SettingsChanged;
             settingsWatch.EnableRaisingEvents = true;
         }
 
         private void SubscribeToResultFormEvents()
         {
-            frmResults.FormShown += (object sender, EventArgs e) => { resultsShowing = true; Debug.WriteLine("Results Shown"); };
-            frmResults.FormHidden += (object sender, EventArgs e) => { resultsShowing = false; Debug.WriteLine("Results Hidden"); };
+            frmResults.FormShown += (sender, e) => { resultsShowing = true; Debug.WriteLine("Results Shown"); };
+            frmResults.FormHidden += (sender, e) => { resultsShowing = false; Debug.WriteLine("Results Hidden"); };
 
         }
 
@@ -197,7 +197,7 @@ namespace SfdcIdUpConverter
         {
             // Debug.WriteLine(log);
 
-            string[] lines = log.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            string[] lines = log.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (var line in lines)
             {

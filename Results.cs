@@ -15,7 +15,8 @@ namespace SfdcIdUpConverter
         #region Private Variables
 
         private Color originalBackColor;
-        private Color clickedBackColor; 
+        private Color clickedBackColor;
+
         #endregion
 
         #region Constructors
@@ -61,20 +62,17 @@ namespace SfdcIdUpConverter
                 using (Graphics g = this.CreateGraphics())
                 {
                     Pen pen = new Pen(Color.DarkBlue, THICKNESS);
-
                     Rectangle rect = e.ClipRectangle;
 
                     // increment X/Y so that drawing starts at 0,0 (instead of -1,-1)
                     rect.X++;
                     rect.Y++;
 
-
                     // reduce rect by thickness of the pen, so it draws on form, not outside of it
                     rect.Width -= THICKNESS;
                     rect.Height -= THICKNESS;
 
                     g.DrawRectangle(pen, rect);
-
                     pen.Dispose();
                 }
             }
@@ -181,22 +179,33 @@ namespace SfdcIdUpConverter
             int initialTopPos = this.Top;
             int pixelsMoved = 0;
 
-            // move off screen to the bottom
-            while (pixelsMoved < pixelsToMove)
+            try
             {
-                pixelsMoved += STEP;
-                this.Top = initialTopPos + pixelsMoved;
+                // turn off painting for the duration animation
+                this.Paint -= Results_Paint;
 
-                Thread.Sleep(10);
+                // move off screen to the bottom
+                while (pixelsMoved < pixelsToMove)
+                {
+                    pixelsMoved += STEP;
+                    this.Top = initialTopPos + pixelsMoved;
+
+                    Thread.Sleep(10);
+                }
+
+                // move back on the screen
+                while (pixelsMoved > 0)
+                {
+                    pixelsMoved -= STEP;
+                    this.Top = initialTopPos + pixelsMoved;
+
+                    Thread.Sleep(10);
+                }
             }
-
-            // move back on the screen
-            while (pixelsMoved > 0)
+            finally
             {
-                pixelsMoved -= STEP;
-                this.Top = initialTopPos + pixelsMoved;
-
-                Thread.Sleep(10);
+                this.Paint += Results_Paint;
+                this.Invalidate();  // force repaint
             }
         }
 
