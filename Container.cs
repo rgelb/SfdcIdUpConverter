@@ -85,7 +85,7 @@ namespace SfdcIdUpConverter
                     break;
                 case ConnectionStatus.Error:
                     bmp = SfdcIdUpConverter.Properties.Resources.connectionError;
-                    trayIconApp.Text = ("Connection Error -  " + lastError).Substring(64);
+                    trayIconApp.Text = ("Connection Error -  " + lastError).Left(63);
                     break;
                 default:
                     MessageBox.Show("Invalid connection status");

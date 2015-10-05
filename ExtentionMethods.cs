@@ -42,5 +42,10 @@ namespace SfdcIdUpConverter
 
         }
 
+        public static string Left(this string str, int length)
+        {
+            return str.Substring(0, Math.Min(str.Length, length));
+        }
+
     }
 }
