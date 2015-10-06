@@ -151,7 +151,8 @@ namespace SfdcIdUpConverter
             // we should be looking 15 digit value
             if (contents.Length != 15) return;
 
-            if (lastClipboardText == contents && DateTime.Now.Subtract(lastClipboardOn).TotalMilliseconds < 500)
+            // sometimes clipboard event fires twice...guard against that
+            if (lastClipboardText == contents && DateTime.Now.Subtract(lastClipboardOn).TotalMilliseconds < 2000)
                 return;
 
             lastClipboardText = contents;
