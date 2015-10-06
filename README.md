@@ -1,4 +1,4 @@
-# SfdcId Up Converter
+# Sfdc ID Up Converter
 ## A quick way to convert 15 digit SfdcID to 18 digits
 
 <a href="https://www.youtube.com/watch?v=1xwd9WkcG10
